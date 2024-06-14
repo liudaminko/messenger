@@ -1,0 +1,10 @@
+.container {
+  width: 25%;
+  border-left: 1px solid #ccc;
+  padding: 10px;
+}
+
+.closeButton {
+  display: block;
+  margin-bottom: 10px;
+}

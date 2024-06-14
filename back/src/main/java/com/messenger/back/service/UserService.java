@@ -1,21 +1,39 @@
 package com.messenger.back.service;
 
+import com.messenger.back.dto.NewUserDTO;
 import com.messenger.back.model.User;
 import com.messenger.back.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final SequenceGeneratorService sequenceGenerator;
+    private final AwsS3Service s3Service;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, SequenceGeneratorService sequenceGenerator, AwsS3Service s3Service) {
         this.userRepository = userRepository;
+        this.sequenceGenerator = sequenceGenerator;
+        this.s3Service = s3Service;
     }
 
-    public void addUser(User user) {
-        userRepository.insert(user);
+    public NewUserDTO addUser(NewUserDTO user) {
+        User newUser = new User(sequenceGenerator.generateSequence(User.SEQUENCE_NAME), user.getPhoneNumber());
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        if (user.getProfilePicture() != null) {
+            newUser.setProfilePicture(s3Service.uploadImage(user.getProfilePicture()));
+        }
+        newUser = userRepository.insert(newUser);
+        return new NewUserDTO()
+                .setId(newUser.getId())
+                .setFirstName(newUser.getFirstName())
+                .setLastName(newUser.getLastName())
+                .setPhoneNumber(newUser.getPhoneNumber())
+                .setProfilePicture(newUser.getProfilePicture());
     }
 
     public void updateUser(User user) {
@@ -34,10 +52,8 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public User getUserByPhoneNumber(String phoneNumber) {
-        return userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() -> new RuntimeException(
-                String.format("Cannot find user by phone number %s", "phoneNumber")
-        ));
+    public Optional<User> getUserByPhoneNumber(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber);
     }
 
     public User getUserById(Integer id) {

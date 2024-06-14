@@ -1,0 +1,145 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url("/public/back18.jpeg");
+  background-size: cover;
+  background-position: center;
+  padding: 16px;
+}
+
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 16px;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.userContainer img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.chatActionsContainer {
+  display: flex;
+  gap: 16px;
+}
+.actionIcon {
+  cursor: pointer;
+}
+
+.chatBody {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+.dateBubble {
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 4px 16px;
+  width: fit-content;
+  align-self: center;
+}
+.myMessageContainer,
+.otherMessageContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.myMessageContainer {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.otherMessageContainer {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.messageContainer {
+  display: flex;
+  align-items: flex-end;
+  max-width: 50%;
+}
+
+.myMessageContainer .messageContainer {
+  flex-direction: row-reverse;
+}
+
+.messageIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 0 16px;
+}
+
+.myMessage,
+.otherMessage {
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.myMessage {
+  background-color: #a2af9f;
+  border-radius: 18px 18px 0px 18px;
+}
+
+.otherMessage {
+  background-color: #efeee5;
+  border-radius: 18px 18px 18px 0px;
+}
+
+.messageText {
+  word-wrap: break-word;
+}
+
+.myMessageFooter,
+.otherMessageFooter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  padding: 2px 4px;
+  border-radius: 10px;
+  font-size: 10px;
+}
+
+.myMessageFooter {
+  justify-content: flex-end;
+  margin-right: 60px;
+}
+
+.otherMessageFooter {
+  margin-left: 60px;
+}
+
+.messageFooter span {
+  font-size: 0.8em;
+  color: #999;
+}
+
+.messageSender {
+  color: #666;
+}
+
+.messageTime {
+  color: #999;
+}

@@ -5,6 +5,7 @@ import com.messenger.back.model.Message;
 import com.messenger.back.repository.ChatRepository;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,8 +18,8 @@ public class ChatService {
         this.chatRepository = chatRepository;
     }
 
-    public void addChat(Chat chat) {
-        chatRepository.insert(chat);
+    public Chat addChat(Chat chat) {
+        return chatRepository.insert(chat);
     }
 
     public void updateChat(Chat chat) {

@@ -1,9 +1,9 @@
 package com.messenger.back.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "user")
 public class User {
@@ -15,6 +15,9 @@ public class User {
     private String phoneNumber;
     private String profilePicture;
 
+    @Transient
+    public static final String SEQUENCE_NAME = "users_sequence";
+
 
     public User(int id, String firstName, String lastName, String phoneNumber, String profilePicture) {
         this.id = id;
@@ -23,6 +26,13 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.profilePicture = profilePicture;
     }
+
+    public User(int id, String phoneNumber) {
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User() {}
 
     public int getId() {
         return id;

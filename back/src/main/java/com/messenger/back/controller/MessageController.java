@@ -1,5 +1,6 @@
 package com.messenger.back.controller;
 
+import com.messenger.back.model.Chat;
 import com.messenger.back.model.Message;
 import com.messenger.back.service.MessageService;
 import org.springframework.http.HttpStatus;
@@ -30,12 +31,12 @@ public class MessageController {
         return ResponseEntity.ok(messageService.getMessagesByChatId(chatId));
     }
 
-    @GetMapping("/{chatId}/messages/search")
-    public ResponseEntity<List<Message>> searchMessagesInChat(
-            @PathVariable Integer chatId,
+    @GetMapping("/{userId}/messages/search")
+    public ResponseEntity<List<Chat>> searchMessagesInChat(
+            @PathVariable Integer userId,
             @RequestParam String pattern
     ) {
-        return ResponseEntity.ok(messageService.searchMessagesInChat(chatId, pattern));
+        return ResponseEntity.ok(messageService.getChatByMessagePattern(userId, pattern));
     }
 
     @GetMapping("/{id}")

@@ -1,5 +1,6 @@
 package com.messenger.back.service;
 
+import com.messenger.back.model.Chat;
 import com.messenger.back.model.Message;
 import com.messenger.back.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,9 @@ public class MessageService {
     public List<Message> getMessagesByChatId(Integer chatId) {
         return messageRepository.findByChatId(chatId);
     }
-    public List<Message> getMessagesByPattern(String pattern) {
-        return messageRepository.findByMessageContaining(pattern);
-    }
 
-    public List<Message> searchMessagesInChat(Integer chatId, String pattern) {
-        return messageRepository.findByChatIdAndMessageContaining(chatId, pattern);
+    public List<Chat> getChatByMessagePattern(Integer userId, String pattern) {
+        return messageRepository.findByMessageContaining(pattern, userId);
     }
 
     public Message getMessageById(Integer id) {

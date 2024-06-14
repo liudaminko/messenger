@@ -2,7 +2,6 @@ package com.messenger.back.dto;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "chat")
 public class ChatDTO {
     private int id;
     private String name;

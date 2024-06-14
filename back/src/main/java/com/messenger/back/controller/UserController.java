@@ -1,7 +1,9 @@
 package com.messenger.back.controller;
 
+import com.messenger.back.dto.NewUserDTO;
 import com.messenger.back.model.User;
 import com.messenger.back.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +19,9 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping
-    public ResponseEntity addUser(@RequestBody User user) {
-        userService.addUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity addUser(@RequestBody @Valid NewUserDTO user) {
+        NewUserDTO newUser = userService.addUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     @PutMapping
@@ -39,7 +41,9 @@ public class UserController {
     }
     @GetMapping("/phone/{phoneNumber}")
     public ResponseEntity<User> getUserByPhoneNumber(@PathVariable String phoneNumber) {
-        return ResponseEntity.ok(userService.getUserByPhoneNumber(phoneNumber));
+        return userService.getUserByPhoneNumber(phoneNumber)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
     @GetMapping("/{firstName}/{lastName}")
     public ResponseEntity<List<User>> getUsersByFullName(@PathVariable String firstName, @PathVariable String lastName) {

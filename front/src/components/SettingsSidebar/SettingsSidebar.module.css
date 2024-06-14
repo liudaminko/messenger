@@ -1,0 +1,15 @@
+.container {
+  background-color: #1e421d;
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.icons {
+  height: 48px;
+  width: 48px;
+  margin: 0;
+}

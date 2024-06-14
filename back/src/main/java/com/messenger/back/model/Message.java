@@ -1,6 +1,11 @@
 package com.messenger.back.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.messenger.back.config.LocalDateTimeDeserializer;
+import com.messenger.back.config.LocalDateTimeSerializer;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -9,8 +14,12 @@ import java.util.UUID;
 @Document(collection = "message")
 public class Message {
 
+    @Id
     private String id;
     private String message;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime sendTime;
     private int senderId;
     private int chatId;

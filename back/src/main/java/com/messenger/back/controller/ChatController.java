@@ -2,6 +2,7 @@ package com.messenger.back.controller;
 
 import com.messenger.back.model.Chat;
 import com.messenger.back.service.ChatService;
+import com.messenger.back.service.SequenceGeneratorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,18 @@ import java.util.List;
 @CrossOrigin
 public class ChatController {
     private final ChatService chatService;
+    private final SequenceGeneratorService sequenceGenerator;
 
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, SequenceGeneratorService sequenceGenerator) {
         this.chatService = chatService;
+        this.sequenceGenerator = sequenceGenerator;
     }
 
     @PostMapping
-    public ResponseEntity<Void> addChat(@RequestBody Chat chat) {
-        chatService.addChat(chat);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Chat> addChat(@RequestBody Chat chat) {
+        chat.setId(sequenceGenerator.generateSequence(Chat.SEQUENCE_NAME));
+        chat = chatService.addChat(chat);
+        return ResponseEntity.status(HttpStatus.CREATED).body(chat);
     }
 
     @PutMapping

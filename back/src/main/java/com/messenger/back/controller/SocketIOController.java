@@ -59,7 +59,7 @@ public class SocketIOController {
              */
 
             log.info(message.getSenderId()+" user send message to chat "+message.getChatId()+" and message is "+message.getMessage());
-            socketServer.getBroadcastOperations().sendEvent(Integer.toString(message.getChatId()),client, message);
+            socketServer.getBroadcastOperations().sendEvent("chat" + message.getChatId(),client, message);
 
 
             /**
